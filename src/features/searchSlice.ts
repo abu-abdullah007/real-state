@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Project } from "../types/project";
 
 const initialState = {
     searchParams: {

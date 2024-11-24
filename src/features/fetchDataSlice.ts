@@ -2,16 +2,17 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { client } from "@/components/utils/Apollo_client";
 import { GET_PROJECTS } from "@/graphql/querys";
 import { RootState } from "@/redux/store";
+import { Project } from "@/types/project";
 
 // Define the initial state
 interface ProjectState {
-    projects: any;
+    projects: Project[];
     loading: boolean;
     error: string | null;
 }
 
 const initialState = {
-    projects: null,
+    projects: [],
     loading: false,
     error: null
 } as ProjectState;
@@ -50,7 +51,7 @@ const apiSlice = createSlice({
             })
             .addCase(fetchDataFromAPI.fulfilled, (state, action) => {
                 state.loading = false;
-                state.projects = action.payload.getProjects;
+                state.projects = action.payload.getProjects.projects;
                 state.error = null;
             })
             .addCase(fetchDataFromAPI.rejected, (state, action) => {

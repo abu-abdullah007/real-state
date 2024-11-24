@@ -1,6 +1,5 @@
 "use client"
 import { useState } from "react";
-import { FaArrowRightLong } from "react-icons/fa6";
 import { ImSearch } from "react-icons/im";
 import { useDispatch } from "react-redux";
 import { getSearchParams } from "@/features/searchSlice";

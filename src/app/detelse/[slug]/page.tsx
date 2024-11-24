@@ -8,9 +8,9 @@ import BigLoading from '@/components/atoms/BigLoading';
 export default function ProjectDetails() {
     const params = useParams();
     const projectId = params.slug;
-    const { projects } = useSelector((state: RootState) => state.api.projects);
+    const { projects } = useSelector((state: RootState) => state.api);
 
-    const project = projects?.find((p: any) => p._id === projectId);
+    const project = projects?.find((p) => p._id === projectId);
 
     if (!project) {
         return <BigLoading />

@@ -3,30 +3,35 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Project } from "@/types/project";
 import BigLoading from "../atoms/BigLoading";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchDataFromAPI } from "@/features/fetchDataSlice";
+import { AppDispatch, RootState } from "@/redux/store";
+import Loading_spin from "../atoms/Loading_effect";
+import Error from "../atoms/Error";
 
-interface CardPropType {
-    data: {
-        projects: Project[];
-        meta: {
-            page: number;
-            limit: number;
-            total: number;
-            totalPage: number;
-        };
-    };
-}
 
-export default function Cards({ data }: CardPropType) {
+export default function Cards() {
     const router = useRouter()
+    const dispatch = useDispatch<AppDispatch>()
 
-    if (!data?.projects) {
+    const { projects, loading, error } = useSelector((state: RootState) => state.api);
+
+    useEffect(() => {
+        dispatch(fetchDataFromAPI())
+    }, [dispatch])
+
+    if (loading) return <Loading_spin />
+    if (error) return <Error />
+
+    if (!projects) {
         return <BigLoading />
     }
 
     return (
         <div className="w-full p-5">
             <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5 gap-y-10">
-                {data.projects.map((project: Project, index: number) => (
+                {projects?.map((project: Project, index: number) => (
                     <div key={index} className="w-full hover:scale-105 cursor-pointer transition active:scale-95 h-[300px] shadow shadow-[#6464645d] rounded flex flex-col justify-between items-center p-2" onClick={() => {
                         router.push(`/detelse/${project._id}`)
                     }}>
