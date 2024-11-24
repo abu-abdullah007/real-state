@@ -1,3 +1,4 @@
+"use client"
 import Herosection from "@/components/molecules/HeroSection";
 import CardHolder from "@/components/organisms/CardHolder";
 

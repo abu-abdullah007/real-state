@@ -2,12 +2,13 @@
 import { useState } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { ImSearch } from "react-icons/im";
+import { useDispatch } from "react-redux";
+import { getSearchParams } from "@/features/searchSlice";
+import { fetchDataFromAPI } from "@/features/fetchDataSlice";
+import { AppDispatch } from "@/redux/store";
 
-interface SearchPropsType {
-    searchData: (value: { [key: string]: string  }) => void
-}
-
-export default function SearchBlock({ searchData }: SearchPropsType) {
+export default function SearchBlock() {
+    const dispatch = useDispatch<AppDispatch>()
 
     const [Title, setTitle] = useState<string>('')
     const [page, setPage] = useState<string>('')
@@ -16,8 +17,8 @@ export default function SearchBlock({ searchData }: SearchPropsType) {
     const [sortMethod, setSortMethod] = useState<string>('ascending')
 
     const handleClick = () => {
-        console.log(Title, Number(page), Number(limit), Sort, sortMethod)
-        searchData({ Title, page, limit, Sort, sortMethod })
+        dispatch(getSearchParams({ Title, page, limit, Sort, sortMethod }))
+        dispatch(fetchDataFromAPI())
     }
 
     const allInputs = [

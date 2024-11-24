@@ -1,10 +1,7 @@
 "use client"
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client';
+import { client } from './Apollo_client';
 
-const client = new ApolloClient({
-    uri: 'https://michiley.com/api/endpoint/graphql',
-    cache: new InMemoryCache(),
-})
 
 export default function ApolloProviders({
     children,
